@@ -1,31 +1,62 @@
 {
-  "name": "next-sitemap-workspace",
+  "name": "next-sitemap",
   "version": "1.0.0",
-  "main": "index.js",
-  "repository": "https://github.com/iamvishnusankar/next-sitemap.git",
-  "author": "Vishnu Sankar",
-  "license": "MIT",
-  "private": true,
+  "description": "Sitemap generator for next.js",
   "type": "module",
-  "packageManager": "yarn@1.22.19",
-  "workspaces": {
-    "packages": [
-      "packages/*",
-      "examples/*"
-    ]
+  "main": "./dist/cjs/index.js",
+  "types": "./dist/@types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "bin"
+  ],
+  "repository": "https://github.com/iamvishnusankar/next-sitemap.git",
+  "funding": [
+    {
+      "url": "https://github.com/iamvishnusankar/next-sitemap.git"
+    }
+  ],
+  "engines": {
+    "node": ">=14.18"
+  },
+  "keywords": [
+    "nextjs",
+    "next",
+    "sitemap",
+    "seo",
+    "react"
+  ],
+  "author": {
+    "name": "Vishnu Sankar",
+    "url": "https://www.iamvishnusankar.com"
+  },
+  "bugs": {
+    "url": "https://github.com/iamvishnusankar/next-sitemap/issues"
+  },
+  "license": "MIT",
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "next-sitemap": "./bin/next-sitemap.mjs",
+    "next-sitemap-cjs": "./bin/next-sitemap.cjs"
   },
   "scripts": {
-    "clean": "tsc --build --clean",
-    "dev:test": "jest --watchAll",
-    "dev:tsc": "tsc --build --watch",
-    "build": "turbo run build --force",
-    "test": "jest --ci --coverage --verbose",
-    "lint": "eslint . && yarn prettier:check",
-    "prettier:check": "prettier --check \"**/*.{js,mjs,cjs,jsx,json,ts,tsx,md,mdx,css,html,yml,yaml,scss,less,graphql,graphqls,gql}\"",
-    "format": "prettier --write \"**/*.{js,mjs,cjs,jsx,json,ts,tsx,md,mdx,css,html,yml,yaml,scss,less,graphql,graphqls,gql}\""
+    "build": "tsc",
+    "postbuild": "tsc --module commonjs --outDir dist/cjs"
   },
-  "devDependencies": {
-    "@corex/workspace": "^4.0.29",
-    "turbo": "^1.3.1"
+  "dependencies": {
+    "@corex/deepmerge": "^4.0.29",
+    "minimist": "^1.2.6"
+  },
+  "peerDependencies": {
+    "next": "*",
+    "@next/env": "*"
   }
 }
